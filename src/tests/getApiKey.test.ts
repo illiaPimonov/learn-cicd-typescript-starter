@@ -4,7 +4,7 @@ import { IncomingHttpHeaders } from "http";
 
 describe("getAPIKey", () => {
   test("returns null when auth header is missing", () => {
-    const headers:IncomingHttpHeaders = {}
+    const headers: IncomingHttpHeaders = {};
     expect(getAPIKey(headers)).toBeNull();
   });
 });
