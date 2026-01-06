@@ -9,10 +9,8 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
 
-    env: 
+    env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
-
 
     steps:
       - name: Check out code
@@ -48,6 +46,10 @@ jobs:
           gcloud builds submit \
             --tag us-central1-docker.pkg.dev/notely-483423/notely-ar-repo/notely:latest \
             .
+
+      - name: Debug DATABASE_URL query keys (safe)
+        run: |
+          node -e "const u=new URL(process.env.DATABASE_URL); console.log('keys:', [...u.searchParams.keys()].map(k=>JSON.stringify(k))); console.log('rawSearch:', JSON.stringify(u.search));"
 
       - name: Run database migrations
         run: npm run db:migrate
